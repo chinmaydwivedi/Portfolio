@@ -61,6 +61,15 @@ const staggerContainer = {
 
 const projects: Project[] = [
   {
+    title: "Parking Detection System",
+    description: "A computer vision application that uses machine learning to detect and monitor parking spaces in real-time. Analyzes video feeds to determine parking availability and provides smart parking management solutions.",
+    image: "/parking-detection.png",
+    technologies: ["Python", "OpenCV", "Computer Vision", "Machine Learning"],
+    liveUrl: "#",
+    repoUrl: "https://github.com/chinmaydwivedi/Parking-detection",
+    featured: true,
+  },
+  {
     title: "Gesture Control Game (For MAC)",
     description: "A fun and interactive game that uses gesture recognition to control gameplay. Leverages computer vision and machine learning techniques to recognize and respond to gestures in real-time.",
     image: "/gesture-game.png",
