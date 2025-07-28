@@ -21,10 +21,13 @@ import {
   ExternalLink,
   Sun,
   Moon,
+  Trophy,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import StarryBackground from "@/components/starry-background"
+import CodeforcesStats from "@/components/codeforces-stats"
 
 interface Project {
   title: string;
@@ -36,15 +39,10 @@ interface Project {
   featured: boolean;
 }
 
-interface Experience {
-  company: string;
-  role: string;
-  period: string;
-  location: string;
-  description: string;
-  logo: string;
-  current: boolean;
-  highlighted?: boolean;
+interface Skill {
+  name: string;
+  darkColor: string;
+  lightColor: string;
 }
 
 const fadeInUp = {
@@ -65,7 +63,7 @@ const projects: Project[] = [
   {
     title: "Gesture Control Game (For MAC)",
     description: "A fun and interactive game that uses gesture recognition to control gameplay. Leverages computer vision and machine learning techniques to recognize and respond to gestures in real-time.",
-    image: "/placeholder.svg?height=300&width=500",
+    image: "/gesture-game.png",
     technologies: ["Python", "OpenCV", "Machine Learning"],
     liveUrl: "#",
     repoUrl: "https://github.com/chinmaydwivedi/gesture-GAMEcontrol",
@@ -74,7 +72,7 @@ const projects: Project[] = [
   {
     title: "LANoWake (Wake-on-LAN Utility)",
     description: "A simple C program that sends a Wake-on-LAN (WoL) magic packet to remotely power on a PC over the internet or a local network. Includes error handling and supports both Windows and Linux.",
-    image: "/placeholder.svg?height=300&width=500",
+    image: "/wake-on-lan.png",
     technologies: ["C", "Networking", "UDP"],
     liveUrl: "#",
     repoUrl: "https://github.com/chinmaydwivedi/WAKEoLAN",
@@ -83,7 +81,7 @@ const projects: Project[] = [
   {
     title: "Algorithm Visualizer",
     description: "A web-based tool for visualizing various sorting and pathfinding algorithms. Features interactive visualizations for Bubble Sort, Quick Sort, Merge Sort, Dijkstra's Algorithm, A* Search, and more.",
-    image: "/placeholder.svg?height=300&width=500",
+    image: "/algorithm-visualizer.png",
     technologies: ["HTML5", "CSS3", "JavaScript"],
     liveUrl: "#",
     repoUrl: "https://github.com/chinmaydwivedi/algorithm-visualizer",
@@ -91,28 +89,47 @@ const projects: Project[] = [
   },
 ]
 
-const experiences: Experience[] = [
-  // Experiences will be added later
+const skills: Skill[] = [
+  { name: "C", darkColor: "text-orange-400", lightColor: "text-orange-600" },
+  { name: "C++", darkColor: "text-blue-400", lightColor: "text-blue-600" },
+  { name: "Express.js", darkColor: "text-yellow-400", lightColor: "text-yellow-600" },
+  { name: "Node.js", darkColor: "text-purple-400", lightColor: "text-purple-600" },
+  { name: "JavaScript", darkColor: "text-yellow-400", lightColor: "text-yellow-600" },
+  { name: "TypeScript", darkColor: "text-blue-600", lightColor: "text-blue-700" },
+  { name: "React.js", darkColor: "text-cyan-400", lightColor: "text-cyan-600" },
+  { name: "Next.js", darkColor: "text-yellow-400", lightColor: "text-yellow-600" },
+  { name: "Tailwind", darkColor: "text-cyan-300", lightColor: "text-cyan-600" },
+  { name: "MySQL", darkColor: "text-blue-400", lightColor: "text-blue-600" },
+  { name: "MongoDB", darkColor: "text-green-400", lightColor: "text-green-600" },
+  { name: "Docker", darkColor: "text-blue-400", lightColor: "text-blue-600" },
+  { name: "Git", darkColor: "text-red-400", lightColor: "text-red-600" },
 ]
 
 export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("home")
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrollY, setScrollY] = useState(0)
-  const [isDarkMode, setIsDarkMode] = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState(true)
+
+  // Force dark mode on initial load
+  useEffect(() => {
+    document.documentElement.classList.add("dark")
+    console.log('Dark mode class added')
+  }, [])
 
   // Theme management
   useEffect(() => {
-    // Check for saved theme preference or default to light mode
+    // Check for saved theme preference or default to dark mode
     const savedTheme = localStorage.getItem("theme")
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
-
-    if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
-      setIsDarkMode(true)
-      document.documentElement.classList.add("dark")
-    } else {
+    
+    if (savedTheme === "light") {
       setIsDarkMode(false)
       document.documentElement.classList.remove("dark")
+      console.log('Light mode set')
+    } else {
+      setIsDarkMode(true)
+      document.documentElement.classList.add("dark")
+      console.log('Dark mode set')
     }
   }, [])
 
@@ -130,27 +147,42 @@ export default function Portfolio() {
   }
 
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY)
-    window.addEventListener("scroll", handleScroll)
+    const handleScroll = () => {
+      requestAnimationFrame(() => {
+        setScrollY(window.scrollY)
+      })
+    }
+    window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
+      const offset = 80 // Account for fixed navigation
+      const elementPosition = element.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - offset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      })
+      
       setActiveSection(sectionId)
       setIsMenuOpen(false)
     }
   }
 
+  console.log('Current isDarkMode state:', isDarkMode)
+  
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+    <div className="min-h-screen transition-colors duration-300 relative w-full">
+      <StarryBackground isDarkMode={isDarkMode} />
       {/* Navigation */}
       <motion.nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrollY > 50
-            ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm dark:shadow-gray-800/20"
+            ? isDarkMode ? "bg-black/20 backdrop-blur-md shadow-sm" : "bg-white/20 backdrop-blur-md shadow-sm"
             : "bg-transparent"
         }`}
         initial={{ y: -100 }}
@@ -158,17 +190,78 @@ export default function Portfolio() {
         transition={{ duration: 0.6 }}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <motion.div className="text-xl font-bold text-gray-900 dark:text-white" whileHover={{ scale: 1.05 }}>
-              Chinmay Dhar Dwivedi
-            </motion.div>
+                    <div className="flex justify-between items-center py-6">
+            <motion.div 
+              className="cursor-pointer relative group"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => scrollToSection("home")}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="text-4xl font-bold tracking-wider relative z-10 italic">
+                <motion.span 
+                  className={`bg-gradient-to-r from-gray-200 via-white to-gray-300 bg-clip-text text-transparent ${
+                    isDarkMode ? 'drop-shadow-lg' : 'drop-shadow-md'
+                  }`}
+                  animate={{ 
+                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
+                  }}
+                  transition={{ 
+                    duration: 3, 
+                    repeat: Infinity, 
+                    ease: "easeInOut" 
+                  }}
+                  style={{ backgroundSize: "200% 200%" }}
+                >
+                  C
+                </motion.span>
+                <motion.span 
+                  className={`bg-gradient-to-r from-gray-300 via-gray-100 to-gray-400 bg-clip-text text-transparent ${
+                    isDarkMode ? 'drop-shadow-lg' : 'drop-shadow-md'
+                  }`}
+                  animate={{ 
+                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
+                  }}
+                  transition={{ 
+                    duration: 3, 
+                    repeat: Infinity, 
+                    ease: "easeInOut",
+                    delay: 0.5
+                  }}
+                  style={{ backgroundSize: "200% 200%" }}
+                >
+                  D
+                </motion.span>
+              </div>
+              
+              {/* Glowing background effect */}
+              <motion.div 
+                className={`absolute -inset-2 bg-gradient-to-r from-gray-200/20 via-white/20 to-gray-300/20 rounded-lg blur-md -z-10 ${
+                  isDarkMode ? 'opacity-40' : 'opacity-30'
+                }`}
+                animate={{ 
+                  opacity: [0.4, 0.7, 0.4],
+                  scale: [1, 1.05, 1]
+                }}
+                transition={{ 
+                  duration: 2, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }}
+              />
+              
 
-            {/* Desktop Navigation */}
+            </motion.div>
+  
+              {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               {[
                 { id: "home", label: "Home", icon: Home },
                 { id: "about", label: "About", icon: User },
-                { id: "experience", label: "Experience", icon: Briefcase },
+                { id: "skills", label: "Skills", icon: Briefcase },
+                { id: "codeforces", label: "Codeforces", icon: Trophy },
                 { id: "projects", label: "Projects", icon: FolderOpen },
                 { id: "contact", label: "Contact", icon: MessageCircle },
               ].map(({ id, label, icon: Icon }) => (
@@ -177,8 +270,8 @@ export default function Portfolio() {
                   onClick={() => scrollToSection(id)}
                   className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
                     activeSection === id
-                      ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
-                      : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                      ? isDarkMode ? "bg-white/20 text-white" : "bg-gray-800/20 text-gray-900"
+                      : isDarkMode ? "text-gray-300 hover:text-white hover:bg-white/10" : "text-gray-700 hover:text-gray-900 hover:bg-gray-800/10"
                   }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -191,7 +284,11 @@ export default function Portfolio() {
               {/* Theme Toggle */}
               <motion.button
                 onClick={toggleTheme}
-                className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+                className={`p-2 rounded-lg transition-colors ${
+                  isDarkMode 
+                    ? "bg-white/10 text-gray-300 hover:text-white hover:bg-white/20" 
+                    : "bg-gray-800/10 text-gray-700 hover:text-gray-900 hover:bg-gray-800/20"
+                }`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 aria-label="Toggle theme"
@@ -238,7 +335,11 @@ export default function Portfolio() {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
-              className="md:hidden bg-white dark:bg-gray-900 border-t dark:border-gray-800"
+              className={`md:hidden backdrop-blur-md border-t ${
+                isDarkMode 
+                  ? "bg-black/20 border-white/10" 
+                  : "bg-white/20 border-gray-800/10"
+              }`}
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
@@ -248,14 +349,19 @@ export default function Portfolio() {
                 {[
                   { id: "home", label: "Home", icon: Home },
                   { id: "about", label: "About", icon: User },
-                  { id: "experience", label: "Experience", icon: Briefcase },
+                  { id: "skills", label: "Skills", icon: Briefcase },
+                  { id: "codeforces", label: "Codeforces", icon: Trophy },
                   { id: "projects", label: "Projects", icon: FolderOpen },
                   { id: "contact", label: "Contact", icon: MessageCircle },
                 ].map(({ id, label, icon: Icon }) => (
                   <button
                     key={id}
                     onClick={() => scrollToSection(id)}
-                    className="flex items-center space-x-3 w-full px-3 py-2 text-left rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors text-gray-900 dark:text-white"
+                    className={`flex items-center space-x-3 w-full px-3 py-2 text-left rounded-lg transition-colors ${
+                      isDarkMode 
+                        ? "hover:bg-white/10 text-white" 
+                        : "hover:bg-gray-800/10 text-gray-900"
+                    }`}
                   >
                     <Icon className="w-4 h-4" />
                     <span>{label}</span>
@@ -268,29 +374,31 @@ export default function Portfolio() {
       </motion.nav>
 
       {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <section id="home" className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-20">
         <div className="max-w-6xl mx-auto">
           <motion.div
-            className="grid lg:grid-cols-2 gap-12 items-center"
+            className="grid lg:grid-cols-2 gap-12 items-start lg:items-center"
             variants={staggerContainer}
             initial="initial"
             animate="animate"
           >
-            <motion.div variants={fadeInUp} className="space-y-6">
+            <motion.div variants={fadeInUp} className="space-y-6 text-left">
               <motion.h1
-                className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white"
+                className={`text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight tracking-tight my-6 break-words max-w-full mt-8 ${
+                  isDarkMode ? 'text-white' : 'text-gray-900'
+                }`}
                 variants={fadeInUp}
               >
-                Chinmay Dhar Dwivedi
+                Chinmay Dwivedi
               </motion.h1>
-              <motion.p className="text-xl sm:text-2xl text-gray-600 dark:text-gray-300" variants={fadeInUp}>
+              <motion.p className={`text-xl sm:text-2xl ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`} variants={fadeInUp}>
                 Software Developer
               </motion.p>
-              <motion.p className="text-lg text-gray-500 dark:text-gray-400 max-w-2xl" variants={fadeInUp}>
+              <motion.p className={`text-lg max-w-2xl ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`} variants={fadeInUp}>
                 Passionate about creating innovative solutions and building impactful software applications.
               </motion.p>
 
-              <motion.div className="flex space-x-4" variants={fadeInUp}>
+              <motion.div className="flex space-x-4 justify-start" variants={fadeInUp}>
                 {[
                   { icon: Mail, href: "mailto:your.email@example.com", label: "Email" },
                   { icon: Github, href: "https://github.com/chinmaydwivedi", label: "GitHub" },
@@ -301,12 +409,16 @@ export default function Portfolio() {
                   <motion.a
                     key={label}
                     href={href}
-                    className="p-3 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                    className={`p-3 rounded-lg transition-colors ${
+                      isDarkMode 
+                        ? "bg-white/10 hover:bg-white/20" 
+                        : "bg-gray-800/10 hover:bg-gray-800/20"
+                    }`}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     aria-label={label}
                   >
-                    <Icon className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                    <Icon className={`w-5 h-5 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`} />
                   </motion.a>
                 ))}
               </motion.div>
@@ -338,7 +450,11 @@ export default function Portfolio() {
           >
             <motion.button
               onClick={() => scrollToSection("about")}
-              className="flex flex-col items-center space-y-2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+              className={`flex flex-col items-center space-y-2 transition-colors ${
+                isDarkMode 
+                  ? "text-gray-400 hover:text-gray-300" 
+                  : "text-gray-600 hover:text-gray-700"
+              }`}
               animate={{ y: [0, 10, 0] }}
               transition={{ repeat: Number.POSITIVE_INFINITY, duration: 2 }}
             >
@@ -350,7 +466,7 @@ export default function Portfolio() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800/50">
+      <section id="about" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 60 }}
@@ -358,8 +474,8 @@ export default function Portfolio() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white">About Me</h2>
-            <div className="prose prose-lg mx-auto text-gray-600 dark:text-gray-300 dark:prose-invert">
+            <h2 className={`text-3xl sm:text-4xl font-bold text-center mb-12 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>About Me</h2>
+            <div className={`prose prose-lg mx-auto ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
               <p>
                 I am a software developer passionate about creating innovative solutions and building impactful applications.
                 My focus is on delivering high-quality, user-friendly software that solves real-world problems.
@@ -378,7 +494,11 @@ export default function Portfolio() {
             <motion.div className="flex justify-center mt-8" whileHover={{ scale: 1.05 }}>
               <Button
                 variant="outline"
-                className="flex items-center space-x-2 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
+                className={`flex items-center space-x-2 ${
+                  isDarkMode 
+                    ? "border-white/20 text-white hover:bg-white/10" 
+                    : "border-gray-800/20 text-gray-900 hover:bg-gray-800/10"
+                }`}
               >
                 <FileText className="w-4 h-4" />
                 <span>More About Me</span>
@@ -388,8 +508,8 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* Experience Section */}
-      <section id="experience" className="py-20 px-4 sm:px-6 lg:px-8">
+      {/* Skills Section */}
+      <section id="skills" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 60 }}
@@ -397,51 +517,39 @@ export default function Portfolio() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white">
-              Work Experience
+            <h2 className={`text-3xl sm:text-4xl font-bold text-center mb-8 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+              Skills
             </h2>
-            <div className="space-y-8">
-              {experiences.map((exp, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -60 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <Card
-                    className={`p-6 dark:bg-gray-800 dark:border-gray-700 ${
-                      exp.highlighted ? "ring-2 ring-blue-200 dark:ring-blue-800 bg-blue-50/50 dark:bg-blue-900/20" : ""
+            <p className={`text-lg text-center mb-12 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+              Here are some of the technologies I have been working with recently.
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4 max-w-6xl mx-auto px-4">
+              {skills.map((skill, index) => (
+                                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.6, delay: index * 0.05 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    className={`px-4 py-3 rounded-full border border-cyan-300/50 backdrop-blur-sm transition-all duration-300 flex items-center justify-center ${
+                      isDarkMode 
+                        ? "bg-white/5 hover:bg-white/10 shadow-lg hover:shadow-xl" 
+                        : "bg-gray-800/5 hover:bg-gray-800/10 shadow-lg hover:shadow-xl"
                     }`}
                   >
-                    <CardContent className="p-0">
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex items-center space-x-4">
-                          <div className="text-2xl">{exp.logo}</div>
-                          <div>
-                            <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{exp.company}</h3>
-                            <p className="text-lg text-gray-600 dark:text-gray-300">{exp.role}</p>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <p className="text-sm text-gray-500 dark:text-gray-400">{exp.period}</p>
-                          <Badge variant={exp.current ? "default" : "secondary"} className="mt-1">
-                            {exp.location}
-                          </Badge>
-                        </div>
-                      </div>
-                      <p className="text-gray-600 dark:text-gray-300">{exp.description}</p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
+                    <span className={`text-sm font-semibold ${isDarkMode ? skill.darkColor : skill.lightColor} tracking-wide`}>
+                      {skill.name}
+                    </span>
+                  </motion.div>
               ))}
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Projects Section */}
-      <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800/50">
+      {/* Codeforces Section */}
+      <section id="codeforces" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 60 }}
@@ -449,7 +557,27 @@ export default function Portfolio() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white">
+            <h2 className={`text-3xl sm:text-4xl font-bold text-center mb-8 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+              Competitive Programming
+            </h2>
+            <p className={`text-lg text-center mb-12 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+              My journey in competitive programming on Codeforces
+            </p>
+            <CodeforcesStats handle="chinmaylk99" isDarkMode={isDarkMode} />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h2 className={`text-3xl sm:text-4xl font-bold text-center mb-12 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
               Featured Projects
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
@@ -463,7 +591,11 @@ export default function Portfolio() {
                   whileHover={{ y: -10 }}
                   className="group"
                 >
-                  <Card className="overflow-hidden h-full hover:shadow-xl dark:hover:shadow-gray-900/50 transition-all duration-300 dark:bg-gray-800 dark:border-gray-700">
+                  <Card className={`overflow-hidden h-full hover:shadow-xl transition-all duration-300 backdrop-blur-sm ${
+                    isDarkMode 
+                      ? "bg-white/5 border-white/10" 
+                      : "bg-gray-800/5 border-gray-800/10"
+                  }`}>
                     <div className="relative overflow-hidden">
                       <Image
                         src={project.image || "/placeholder.svg"}
@@ -475,11 +607,15 @@ export default function Portfolio() {
                       {project.featured && <Badge className="absolute top-4 left-4">Featured</Badge>}
                     </div>
                     <CardContent className="p-6">
-                      <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">{project.title}</h3>
-                      <p className="text-gray-600 dark:text-gray-300 mb-4">{project.description}</p>
+                      <h3 className={`text-xl font-semibold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{project.title}</h3>
+                      <p className={`mb-4 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>{project.description}</p>
                       <div className="flex flex-wrap gap-2 mb-4">
                         {project.technologies.map((tech) => (
-                          <Badge key={tech} variant="secondary" className="text-xs dark:bg-gray-700 dark:text-gray-300">
+                          <Badge key={tech} variant="secondary" className={`text-xs ${
+                            isDarkMode 
+                              ? "bg-white/10 text-gray-300" 
+                              : "bg-gray-800/10 text-gray-700"
+                          }`}>
                             {tech}
                           </Badge>
                         ))}
@@ -495,7 +631,11 @@ export default function Portfolio() {
                           size="sm"
                           variant="outline"
                           asChild
-                          className="dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+                          className={`${
+                            isDarkMode 
+                              ? "border-white/20 text-white hover:bg-white/10" 
+                              : "border-gray-800/20 text-gray-900 hover:bg-gray-800/10"
+                          }`}
                         >
                           <Link href={project.repoUrl} className="flex items-center space-x-2">
                             <Github className="w-4 h-4" />
@@ -521,30 +661,37 @@ export default function Portfolio() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-gray-900 dark:text-white">Let's Connect</h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto">
+            <h2 className={`text-3xl sm:text-4xl font-bold mb-8 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Let's Connect</h2>
+            <p className={`text-xl mb-12 max-w-2xl mx-auto ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
               Interested in collaborating, have a project idea, or just want to chat about tech? Reach out to me anytime!
             </p>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
               {[
                 { icon: Mail, label: "Email", value: "chinmaydhardwivedi@gmail.com", href: "mailto:chinmaydhardwivedi@gmail.com" },
-                { icon: Github, label: "GitHub", value: "@chinmaydwivedi", href: "https://github.com/chinmaydwivedi" },
+                { icon: Github, label: "GitHub", value: "chinmaydwivedi", href: "https://github.com/chinmaydwivedi" },
                 { icon: Linkedin, label: "LinkedIn", value: "Chinmay D. Dwivedi", href: "https://www.linkedin.com/in/chinmay-dhar-dwivedi-955768286/" },
-                { icon: Twitter, label: "Twitter", value: "@chinmaydwivedii", href: "https://x.com/chinmaydwivedii" },
+                { icon: Twitter, label: "Twitter", value: "chinmaydwivedii", href: "https://x.com/chinmaydwivedii" },
               ].map(({ icon: Icon, label, value, href }) => (
                 <motion.a
                   key={label}
                   href={href}
-                  className="flex flex-col items-center p-6 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors group"
+                  className={`flex flex-col items-center p-6 rounded-lg transition-colors group h-full backdrop-blur-sm ${
+                    isDarkMode 
+                      ? "bg-white/5 hover:bg-white/10" 
+                      : "bg-gray-800/5 hover:bg-gray-800/10"
+                  }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Icon className="w-8 h-8 mb-3 text-gray-600 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors" />
-                  <h3 className="font-semibold mb-1 text-gray-900 dark:text-white">{label}</h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap text-center w-full max-w-full overflow-x-auto">{value}</p>
+                  <Icon className={`w-8 h-8 mb-3 transition-colors ${
+                    isDarkMode 
+                      ? "text-gray-300 group-hover:text-white" 
+                      : "text-gray-700 group-hover:text-gray-900"
+                  }`} />
+                  <h3 className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{label}</h3>
                 </motion.a>
               ))}
             </div>
@@ -562,9 +709,13 @@ export default function Portfolio() {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-4 sm:px-6 lg:px-8 bg-gray-900 dark:bg-gray-950 text-white">
+      <footer className={`py-8 px-4 sm:px-6 lg:px-8 backdrop-blur-md ${
+        isDarkMode 
+          ? "bg-black/20 text-white" 
+          : "bg-white/20 text-gray-900"
+      }`}>
         <div className="max-w-6xl mx-auto text-center">
-          <p className="text-gray-400 dark:text-gray-500">
+          <p className={isDarkMode ? "text-gray-400" : "text-gray-600"}>
             © 2025 Chinmay D. Dwivedi. Built with Next.js and Tailwind CSS.
           </p>
         </div>
@@ -572,3 +723,5 @@ export default function Portfolio() {
     </div>
   )
 }
+
+

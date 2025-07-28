@@ -54,7 +54,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
   }
 }
 
@@ -78,4 +78,92 @@
 /* Smooth transitions for theme switching */
 * {
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* Background styles for both themes */
+html, body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  transition: background 0.5s ease;
+  overflow-x: hidden;
+}
+
+html.dark {
+  background: linear-gradient(to bottom, #0b0b2b, #1b2735 70%, #090a0f);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+}
+
+html.dark body {
+  background: transparent;
+  min-height: 100vh;
+}
+
+html:not(.dark) {
+  background: linear-gradient(to bottom, #87CEEB, #98D8E8 50%, #B0E0E6 100%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+}
+
+html:not(.dark) body {
+  background: transparent;
+  min-height: 100vh;
+}
+
+/* Ensure content is above the background */
+#__next {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Improve scrolling performance */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+/* Better responsive design */
+@media (max-width: 640px) {
+  html {
+    scroll-padding-top: 60px;
+  }
+}
+
+/* Improve section spacing */
+section {
+  scroll-margin-top: 80px;
+}
+
+/* Ensure the main container covers full viewport */
+.min-h-screen {
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  position: relative;
+}
+
+/* Ensure background extends beyond viewport */
+body {
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Prevent any rendering artifacts */
+* {
+  box-sizing: border-box;
+}
+
+/* Ensure smooth rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
