@@ -384,7 +384,7 @@ export default function Portfolio() {
           >
             <motion.div variants={fadeInUp} className="space-y-6 text-left">
               <motion.h1
-                className={`text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight tracking-tight my-6 break-words max-w-full mt-8 ${
+                className={`text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight tracking-tight my-6 whitespace-nowrap mt-8 ${
                   isDarkMode ? 'text-white' : 'text-gray-900'
                 }`}
                 variants={fadeInUp}
