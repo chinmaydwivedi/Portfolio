@@ -1,0 +1,25 @@
+export const personal = {
+  name: "Chinmay Dwivedi",
+  title: "Software Developer",
+  tagline: "Building impactful software & solving real-world problems",
+  about: [
+    "I'm a CS undergraduate at PES University, Bangalore, passionate about building innovative software solutions. My interests span systems programming, cryptography, computer vision, and competitive programming.",
+    "Currently contributing to open-source at Prime Intellect, building RL environments for VirtualBox and SGLang. I also mentor developers at Google Developer Group, helping them grow their skills.",
+    "With 450+ problems solved across competitive programming platforms and top finishes in hackathons, I bring both analytical thinking and practical engineering skills to every project I build.",
+  ],
+  email: "chinmaydhardwivedi@gmail.com",
+  contactEmail: "chinmaydwivedi.official@gmail.com",
+  github: "https://github.com/chinmaydwivedi",
+  linkedin: "https://www.linkedin.com/in/chinmay-dhar-dwivedi-955768286/",
+  twitter: "https://x.com/chinmaydwivedii",
+  codeforcesHandle: "chinmaylk99",
+  location: "Bangalore, India",
+  university: "PES University",
+  resumeUrl: "#",
+  highlights: [
+    { label: "Problems Solved", value: "450+" },
+    { label: "Open Source", value: "Prime Intellect" },
+    { label: "Hackathon", value: "Top 10 Terrathon" },
+    { label: "Role", value: "GDG Mentor" },
+  ],
+}
