@@ -24,6 +24,7 @@ import {
 } from "lucide-react"
 import Navbar from "@/components/navbar"
 import CodeforcesStats from "@/components/codeforces-stats"
+import InteractiveGraph from "@/components/interactive-graph"
 import { projects } from "@/data/projects"
 import { skills, skillCategories } from "@/data/skills"
 import { personal } from "@/data/personal"
@@ -230,23 +231,11 @@ export default function Portfolio() {
 
             <motion.div
               variants={fadeUp}
-              className="lg:col-span-2 flex justify-center"
+              className="lg:col-span-2 hidden lg:block"
             >
-              <motion.div
-                className="relative"
-                whileHover={{ scale: 1.03 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-primary/20 via-transparent to-primary/10 blur-xl" />
-                <Image
-                  src="/profile.png"
-                  alt={personal.name}
-                  width={380}
-                  height={380}
-                  className="rounded-2xl shadow-2xl relative z-10"
-                  priority
-                />
-              </motion.div>
+              <div className="w-full h-[380px]">
+                <InteractiveGraph />
+              </div>
             </motion.div>
           </motion.div>
 
@@ -287,52 +276,6 @@ export default function Portfolio() {
               </motion.p>
             ))}
           </div>
-        </div>
-      </AnimatedSection>
-
-      {/* Skills */}
-      <AnimatedSection id="skills">
-        <div className="max-w-5xl mx-auto">
-          <SectionHeading
-            title="Skills"
-            subtitle="Technologies I work with regularly"
-          />
-
-          <div className="flex flex-wrap justify-center gap-2 mb-8">
-            {skillCategories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveSkillCategory(cat)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
-                  activeSkillCategory === cat
-                    ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
-                    : "glass glass-hover text-muted-foreground"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-
-          <motion.div
-            className="flex flex-wrap justify-center gap-3"
-            layout
-          >
-            {filteredSkills.map((skill, i) => (
-              <motion.div
-                key={skill.name}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ delay: i * 0.03 }}
-                className="px-4 py-2 rounded-full glass glass-hover text-sm font-medium text-foreground/80 cursor-default"
-                whileHover={{ scale: 1.05, y: -2 }}
-              >
-                {skill.name}
-              </motion.div>
-            ))}
-          </motion.div>
         </div>
       </AnimatedSection>
 
@@ -434,6 +377,52 @@ export default function Portfolio() {
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
+        </div>
+      </AnimatedSection>
+
+      {/* Skills */}
+      <AnimatedSection id="skills">
+        <div className="max-w-5xl mx-auto">
+          <SectionHeading
+            title="Skills"
+            subtitle="Technologies I work with regularly"
+          />
+
+          <div className="flex flex-wrap justify-center gap-2 mb-8">
+            {skillCategories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveSkillCategory(cat)}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+                  activeSkillCategory === cat
+                    ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+                    : "glass glass-hover text-muted-foreground"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          <motion.div
+            className="flex flex-wrap justify-center gap-3"
+            layout
+          >
+            {filteredSkills.map((skill, i) => (
+              <motion.div
+                key={skill.name}
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ delay: i * 0.03 }}
+                className="px-4 py-2 rounded-full glass glass-hover text-sm font-medium text-foreground/80 cursor-default"
+                whileHover={{ scale: 1.05, y: -2 }}
+              >
+                {skill.name}
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </AnimatedSection>
 
