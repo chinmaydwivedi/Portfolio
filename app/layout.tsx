@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Space_Mono } from "next/font/google"
+import { Cormorant_Garamond, Space_Mono } from "next/font/google"
 import "./globals.css"
 import { PostHogProvider } from "@/components/posthog-provider"
 
@@ -7,6 +7,13 @@ const mono = Space_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
   weight: ["400", "700"],
+})
+
+const serif = Cormorant_Garamond({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
 })
 
 export const metadata: Metadata = {
@@ -37,7 +44,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark scroll-smooth">
-      <body className={`${mono.variable}`}>
+      <body className={`${mono.variable} ${serif.variable}`}>
         <PostHogProvider>{children}</PostHogProvider>
       </body>
     </html>
