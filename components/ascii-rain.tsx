@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react"
 
 const glyphs = "01010101<>[]{}+-:=/\\|"
-const phosphors = ["rgba(163, 235, 176, .55)", "rgba(101, 218, 24, .46)", "rgba(109, 210, 255, .48)"]
+const phosphors = ["rgba(163, 235, 176, .55)", "rgba(101, 218, 24, .46)", "rgba(240, 197, 82, .38)"]
 
 export default function AsciiRain() {
   const canvasRef = useRef<HTMLCanvasElement>(null)

@@ -10,6 +10,8 @@ import {
   Radio,
 } from "lucide-react"
 import AsciiRain from "@/components/ascii-rain"
+import CodeforcesConsole from "@/components/codeforces-console"
+import CommandConsole from "@/components/command-console"
 import { personal } from "@/data/personal"
 import { projects } from "@/data/projects"
 
@@ -81,32 +83,29 @@ export default function Portfolio() {
           <span>CHINMAY</span>
           <span>DWIVEDI</span>
         </a>
-        <p className="header-descriptor">SYSTEMS ENGINEERING<br />IN THE OPEN</p>
+        <p className="header-descriptor">PORTFOLIO CLI<br />SESSION ONLINE</p>
         <nav aria-label="Primary navigation">
-          <a href="#work">WORK</a>
-          <a href="#oss">OSS</a>
-          <a href="#log">LOG</a>
-          <a href="#contact">CONTACT</a>
+          <a href="#work">./WORK</a>
+          <a href="#oss">./OSS</a>
+          <a href="#codeforces">./CF</a>
+          <a href="#log">./LOG</a>
+          <a href="#contact">./CONTACT</a>
         </nav>
       </header>
 
       <section className="hero" aria-labelledby="hero-title">
         <div className="hero-copy">
-          <p className="eyebrow"><span className="pulse-dot" /> SESSION 07 / BENGALURU, INDIA</p>
+          <p className="eyebrow"><span className="pulse-dot" /> $ WHOAMI --LOCATION=BENGALURU</p>
           <h1 id="hero-title">Systems that<br />stay correct<br /><em>under pressure.</em></h1>
           <p className="hero-intro">
             I&apos;m Chinmay Dwivedi—a systems-minded software engineer building developer tools,
             RL evaluation environments, and reliable distributed systems.
           </p>
           <div className="hero-actions">
-            <a className="primary-action" href="#work">EXPLORE THE WORK <ArrowDownRight /></a>
-            <a className="text-action" href={personal.resumeUrl} target="_blank" rel="noreferrer"><Download /> RÉSUMÉ.PDF</a>
+            <a className="primary-action" href="#work">RUN: LS ./WORK <ArrowDownRight /></a>
+            <a className="text-action" href={personal.resumeUrl} target="_blank" rel="noreferrer"><Download /> $ OPEN RÉSUMÉ.PDF</a>
           </div>
-          <div className="command-deck" aria-label="Portfolio command prompt">
-            <span>chinmay@portfolio:~$</span>
-            <code>inspect --systems --oss --recent</code>
-            <i aria-hidden="true">↵</i>
-          </div>
+          <CommandConsole resumeUrl={personal.resumeUrl} />
         </div>
 
         <figure className="telemetry-monitor">
@@ -144,7 +143,7 @@ export default function Portfolio() {
 
       <section className="overview section-grid" id="about" aria-label="Profile overview">
         <fieldset className="story-panel offset-panel">
-          <legend>operator profile</legend>
+          <legend>whoami</legend>
           <p className="panel-index">01 / ABOUT</p>
           <h2>Engineering where systems, agents, and people meet.</h2>
           <p>
@@ -163,7 +162,7 @@ export default function Portfolio() {
         </fieldset>
 
         <fieldset className="compute-panel offset-panel">
-          <legend>current vector</legend>
+          <legend>runtime status</legend>
           <div className="network-visual" aria-hidden="true">
             <div className="orbit orbit-one" />
             <div className="orbit orbit-two" />
@@ -181,9 +180,17 @@ export default function Portfolio() {
         </fieldset>
       </section>
 
+      <section className="codeforces-section content-section" id="codeforces" aria-labelledby="codeforces-title">
+        <div className="section-heading compact">
+          <div><p className="eyebrow">02 / $ CF PROFILE CHINMAYLK99</p><h2 id="codeforces-title">Competitive signal</h2></div>
+          <p>Live profile telemetry and the complete rated-contest trajectory from the official Codeforces API.</p>
+        </div>
+        <CodeforcesConsole handle={personal.codeforcesHandle} />
+      </section>
+
       <section className="content-section" id="work" aria-labelledby="work-title">
         <div className="section-heading">
-          <div><p className="eyebrow">02 / SELECTED WORK</p><h2 id="work-title">Active engineering runs</h2></div>
+          <div><p className="eyebrow">03 / $ LS ./SELECTED-WORK</p><h2 id="work-title">Active engineering runs</h2></div>
           <p>Four systems selected for their technical depth, shipped state, and real-world feedback loops.</p>
         </div>
         <div className="filter-row" aria-label="Static project filters">
@@ -226,7 +233,7 @@ export default function Portfolio() {
 
       <section className="oss-zone" id="oss" aria-labelledby="oss-title">
         <div className="oss-intro">
-          <p className="eyebrow">03 / UPSTREAM SIGNAL</p>
+          <p className="eyebrow">04 / $ GH PR LIST --RECENT</p>
           <h2 id="oss-title">Open-source work,<br /><em>in public.</em></h2>
           <p>Production fixes, agent environments, performance work, and auditable contracts sent upstream.</p>
           <a href={`${personal.github}?tab=pull-requests`} target="_blank" rel="noreferrer">VIEW GITHUB PROFILE <ExternalArrow /></a>
@@ -245,7 +252,7 @@ export default function Portfolio() {
 
       <section className="log-section content-section" id="log" aria-labelledby="log-title">
         <div className="section-heading compact">
-          <div><p className="eyebrow">04 / TRANSMISSION LOG</p><h2 id="log-title">Recent commits &amp; merges</h2></div>
+          <div><p className="eyebrow">05 / $ GIT LOG --RECENT</p><h2 id="log-title">Recent commits &amp; merges</h2></div>
           <p>Verified from public GitHub history. The newest signal is listed first.</p>
         </div>
         <div className="activity-table">
@@ -258,9 +265,9 @@ export default function Portfolio() {
         </div>
       </section>
 
-      <section className="toolkit-section section-grid" aria-label="Technical toolkit">
+      <section className="toolkit-section section-grid" id="skills" aria-label="Technical toolkit">
         <fieldset className="toolkit-panel offset-panel">
-          <legend>working set</legend>
+          <legend>cat skills.json</legend>
           {capabilities.map(([group, tools]) => (
             <div className="capability-row" key={group}><span>{group}</span><p>{tools}</p></div>
           ))}
@@ -278,7 +285,7 @@ export default function Portfolio() {
 
       <footer className="contact-section" id="contact">
         <div className="contact-orbit" aria-hidden="true"><span /><span /><span /></div>
-        <p className="eyebrow"><span className="pulse-dot" /> CHANNEL OPEN / 2026</p>
+        <p className="eyebrow"><span className="pulse-dot" /> $ MAIL --NEW / CHANNEL OPEN</p>
         <h2>Start a<br /><em>transmission.</em></h2>
         <p className="contact-copy">Have an ambitious systems problem, an open-source idea, or a role where careful engineering matters? Send a signal.</p>
         <div className="contact-actions">
