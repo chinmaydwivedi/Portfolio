@@ -12,7 +12,7 @@ const mono = Space_Mono({
 export const metadata: Metadata = {
   title: "Chinmay Dwivedi | Systems-minded Software Engineer",
   description:
-    "Chinmay Dwivedi builds developer tools, RL evaluation environments, and reliable data systems. Open-source contributor and competitive programmer.",
+    "Chinmay Dwivedi builds developer tools, RL evaluation environments, and reliable distributed systems. Open-source contributor to Warp, Prime Intellect, and Monkeytype.",
   keywords: [
     "Chinmay Dwivedi",
     "Software Developer",

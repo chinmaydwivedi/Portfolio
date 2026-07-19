@@ -1,10 +1,10 @@
 export const personal = {
   name: "Chinmay Dwivedi",
   title: "Systems-minded Software Engineer",
-  tagline: "Building developer tools, RL evaluation environments, and reliable data systems.",
+  tagline: "Building developer tools, RL evaluation environments, and reliable distributed systems.",
   about: [
     "I'm a CS undergraduate at PES University, Bangalore, passionate about building innovative software solutions. My interests span systems programming, cryptography, computer vision, and competitive programming.",
-    "Currently contributing to open-source at Prime Intellect, building RL environments for VirtualBox and SGLang. I also mentor developers at Google Developer Group, helping them grow their skills.",
+    "Currently contributing to open-source at Prime Intellect and shipping production fixes to projects including Warp and Monkeytype. I also mentor developers at Google Developer Group, helping them grow their skills.",
     "With 500+ verified problems solved across competitive programming platforms, I bring analytical rigor and practical engineering judgment to every project I build.",
   ],
   email: "chinmaydhardwivedi@gmail.com",
