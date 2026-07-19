@@ -76,9 +76,9 @@ button { color: inherit; }
 .hero-meta .online { color: var(--green); }
 .hero-meta .online svg { width: 7px; fill: var(--green); }
 .profile-pane { border: 1px solid var(--line); background: #0a0e0f; box-shadow: 8px 8px 0 #182022; }
-.profile-image { position: relative; height: 190px; filter: grayscale(1) contrast(1.1); overflow: hidden; border-bottom: 1px solid var(--line); }
+.profile-image { position: relative; height: 190px; overflow: hidden; border-bottom: 1px solid var(--line); background: #050808; }
 .profile-image:after { content: ""; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(transparent 0 3px, rgba(0,0,0,.19) 3px 4px); }
-.profile-image img { object-fit: cover; }
+.profile-image img { object-fit: cover; object-position: center 52%; filter: saturate(.88) contrast(1.05); }
 .profile-data { padding: 12px 15px; }
 .profile-data p { display: flex; justify-content: space-between; margin: 5px 0; font-size: 8px; }
 .profile-data span { color: #66716b; }.profile-data b { color: var(--green); }

@@ -80,7 +80,7 @@ function HomeOutput({ run }: { run: (command: string) => void }) {
         </div>
       </div>
       <div className="profile-pane">
-        <div className="profile-image"><Image src="/profile.png" alt="Chinmay Dwivedi" fill priority /></div>
+        <div className="profile-image"><Image src="/retro-computer.png" alt="A retro CRT computer glowing with terminal output" fill priority /></div>
         <div className="profile-data">
           <p><span>problems_solved</span><b>500+</b></p>
           <p><span>students_mentored</span><b>50+</b></p>
