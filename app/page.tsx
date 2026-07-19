@@ -80,8 +80,9 @@ export default function Portfolio() {
 
       <header className="site-header">
         <a className="wordmark" href="#top" aria-label="Chinmay Dwivedi — back to top">
-          <span>CHINMAY</span>
-          <span>DWIVEDI</span>
+          <span className="brand-led" aria-hidden="true" />
+          <span className="wordmark-command"><b>chinmay</b><i>@</i><strong>portfolio</strong><em>:~$</em></span>
+          <span className="brand-cursor" aria-hidden="true">█</span>
         </a>
         <p className="header-descriptor">PORTFOLIO CLI<br />SESSION ONLINE</p>
         <nav aria-label="Primary navigation">
