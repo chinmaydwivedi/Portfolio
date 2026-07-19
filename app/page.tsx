@@ -1,6 +1,6 @@
 "use client"
 
-import { FormEvent, useEffect, useRef, useState } from "react"
+import { FormEvent, MouseEvent, useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import {
   ArrowUpRight, Check, ChevronRight, Circle, Copy, Github,
@@ -139,12 +139,20 @@ function SkillsOutput() {
 
 function ContactOutput() {
   const [copied, setCopied] = useState(false)
-  const copyEmail = async () => { await navigator.clipboard.writeText(personal.email); setCopied(true); setTimeout(() => setCopied(false), 1600) }
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(personal.email)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1600)
+    } catch {
+      window.location.href = `mailto:${personal.email}`
+    }
+  }
   return <div className="command-output contact-output"><p className="output-title">CONNECTIONS</p><h2>Let&apos;s build something that matters.</h2><p>Interested in systems, OSS, developer tools, or ambitious engineering problems? My inbox is open.</p>
     <div className="contact-links">
-      <a href={`mailto:${personal.email}`}><Mail /> {personal.email}</a><button onClick={copyEmail}>{copied ? <Check /> : <Copy />} {copied ? "copied" : "copy"}</button>
-      <a href={personal.github} target="_blank"><Github /> github.com/chinmaydwivedi <ArrowUpRight /></a>
-      <a href={personal.linkedin} target="_blank"><Linkedin /> linkedin.com/in/chinmaydwivedii <ArrowUpRight /></a>
+      <div className="contact-email-row"><a href={`mailto:${personal.email}`}><Mail /><span>{personal.email}</span></a><button type="button" onClick={copyEmail}>{copied ? <Check /> : <Copy />} {copied ? "copied" : "copy"}</button></div>
+      <a href={personal.github} target="_blank" rel="noreferrer"><Github /><span>github.com/chinmaydwivedi</span><ArrowUpRight /></a>
+      <a href={personal.linkedin} target="_blank" rel="noreferrer"><Linkedin /><span>linkedin.com/in/chinmaydwivedii</span><ArrowUpRight /></a>
     </div>
   </div>
 }
@@ -166,24 +174,28 @@ export default function Portfolio() {
   const [input, setInput] = useState("")
   const [lastCommand, setLastCommand] = useState("")
   const inputRef = useRef<HTMLInputElement>(null)
-  const endRef = useRef<HTMLDivElement>(null)
-
   const run = (raw: string) => {
     const value = raw.trim().toLowerCase()
     if (!value) return
     if (value === "clear") { setHistory([]); setInput(""); return }
     const aliases: Record<string, Command> = { home: "home", help: "help", "--help": "help", about: "about", whoami: "about", oss: "oss", contributions: "oss", work: "work", projects: "work", ls: "work", skills: "skills", stack: "skills", contact: "contact", email: "contact", resume: "resume", cv: "resume" }
     const command = aliases[value] || "unknown"
-    setHistory(items => [...items, { id: Date.now(), input: raw, command }])
+    const id = Date.now()
+    setHistory(items => [...items, { id, input: raw, command }])
     setLastCommand(raw); setInput("")
     if (command === "resume") window.open(personal.resumeUrl, "_blank", "noopener,noreferrer")
-    setTimeout(() => endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" }), 30)
+    setTimeout(() => document.getElementById(`command-${id}`)?.scrollIntoView({ behavior: "smooth", block: "start" }), 50)
   }
 
   const submit = (event: FormEvent) => { event.preventDefault(); run(input) }
   useEffect(() => { inputRef.current?.focus() }, [])
 
-  return <main className="cli-site" onClick={() => inputRef.current?.focus()}>
+  const focusPrompt = (event: MouseEvent<HTMLElement>) => {
+    if ((event.target as HTMLElement).closest("a, button, input")) return
+    inputRef.current?.focus({ preventScroll: true })
+  }
+
+  return <main className="cli-site" onClick={focusPrompt}>
     <div className="terminal-window">
       <header className="terminal-titlebar">
         <div className="window-controls"><span /><span /><span /></div>
@@ -207,14 +219,13 @@ export default function Portfolio() {
           <div className="terminal-scroll">
             <div className="boot-sequence"><span>Last login: {new Date().toLocaleDateString("en-US", { weekday: "short", month: "short", day: "2-digit" })} on ttys001</span><span>portfolio-cli v2.0.0</span></div>
             <HomeOutput run={run} />
-            {history.map(item => <div className="history-item" key={item.id}>
+            {history.map(item => <div className="history-item" id={`command-${item.id}`} key={item.id}>
               <div className="entered-command"><Prompt muted /> {item.input}</div>
               <Output command={item.command} input={item.input} run={run} />
             </div>)}
             <form className="command-line" onSubmit={submit}>
               <Prompt /><input ref={inputRef} value={input} onChange={event => setInput(event.target.value)} onKeyDown={event => { if (event.key === "ArrowUp") { event.preventDefault(); setInput(lastCommand) } }} aria-label="Terminal command" autoComplete="off" spellCheck={false} /><span className="input-cursor" />
             </form>
-            <div ref={endRef} />
           </div>
         </section>
       </div>
