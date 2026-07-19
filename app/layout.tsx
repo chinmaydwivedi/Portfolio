@@ -1,17 +1,18 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Space_Mono } from "next/font/google"
 import "./globals.css"
 import { PostHogProvider } from "@/components/posthog-provider"
 
-const inter = Inter({
+const mono = Space_Mono({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-mono",
+  weight: ["400", "700"],
 })
 
 export const metadata: Metadata = {
-  title: "Chinmay Dwivedi | Software Developer",
+  title: "Chinmay Dwivedi | Systems-minded Software Engineer",
   description:
-    "Portfolio of Chinmay Dwivedi — Software Developer, Competitive Programmer, and Open Source Contributor. Building impactful software solutions.",
+    "Chinmay Dwivedi builds developer tools, RL evaluation environments, and reliable data systems. Open-source contributor and competitive programmer.",
   keywords: [
     "Chinmay Dwivedi",
     "Software Developer",
@@ -36,7 +37,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark scroll-smooth">
-      <body className={`${inter.variable} font-sans antialiased noise-bg`}>
+      <body className={`${mono.variable}`}>
         <PostHogProvider>{children}</PostHogProvider>
       </body>
     </html>

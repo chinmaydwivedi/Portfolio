@@ -27,6 +27,28 @@ export const projects: Project[] = [
     category: "web",
   },
   {
+    id: "kubedataguard",
+    title: "KubeDataGuard",
+    description: "A Kubernetes-native consistency SLO operator that verifies derived data across Kafka, OpenSearch, Redis, and ClickHouse, with evidence reports and repair workflows.",
+    image: "/kubedataguard.svg",
+    technologies: ["Python", "Go", "Kubernetes", "Kafka", "PostgreSQL"],
+    liveUrl: "#",
+    repoUrl: "https://github.com/chinmaydwivedi/KubeDataGuard",
+    featured: true,
+    category: "systems",
+  },
+  {
+    id: "snippex",
+    title: "Snippex",
+    description: "A fast, focused web experience for organizing and working with reusable code snippets, built and shipped with a modern TypeScript stack.",
+    image: "/snippex.svg",
+    technologies: ["TypeScript", "Next.js", "React", "Vercel"],
+    liveUrl: "https://snippex-navy.vercel.app",
+    repoUrl: "https://github.com/chinmaydwivedi/snippex",
+    featured: true,
+    category: "tools",
+  },
+  {
     id: "parking-detection",
     title: "Parking Detection System",
     description:
@@ -35,7 +57,7 @@ export const projects: Project[] = [
     technologies: ["Python", "OpenCV", "Computer Vision", "Machine Learning"],
     liveUrl: "#",
     repoUrl: "https://github.com/chinmaydwivedi/Parking-detection",
-    featured: true,
+    featured: false,
     category: "ml",
   },
   {
@@ -47,7 +69,7 @@ export const projects: Project[] = [
     technologies: ["Python", "OpenCV", "Machine Learning"],
     liveUrl: "#",
     repoUrl: "https://github.com/chinmaydwivedi/gesture-GAMEcontrol",
-    featured: true,
+    featured: false,
     category: "ml",
   },
   {
@@ -59,7 +81,7 @@ export const projects: Project[] = [
     technologies: ["C", "Networking", "UDP", "Systems Programming"],
     liveUrl: "#",
     repoUrl: "https://github.com/chinmaydwivedi/WAKEoLAN",
-    featured: true,
+    featured: false,
     category: "systems",
   },
   {
