@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react"
 
 const glyphs = "01{}[]<>/\\|*+=$#@"
+const phosphors = ["rgba(103, 223, 255, .48)", "rgba(255, 107, 214, .42)", "rgba(255, 174, 98, .42)"]
 
 export default function AsciiRain() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -36,7 +37,7 @@ export default function AsciiRain() {
       const width = canvas.clientWidth
       const height = canvas.clientHeight
       if (time - previous > 75) {
-        context.fillStyle = "rgba(8, 12, 13, 0.14)"
+        context.fillStyle = "rgba(2, 4, 10, 0.16)"
         context.fillRect(0, 0, width, height)
         context.font = "10px var(--font-mono), monospace"
         context.textAlign = "center"
@@ -45,7 +46,7 @@ export default function AsciiRain() {
           if (Math.random() > 0.72) continue
           const glyph = glyphs[Math.floor(Math.random() * glyphs.length)]
           const lead = Math.random() > 0.9
-          context.fillStyle = lead ? "rgba(220, 255, 200, .8)" : "rgba(183, 243, 74, .48)"
+          context.fillStyle = lead ? "rgba(232, 248, 255, .82)" : phosphors[Math.floor(Math.random() * phosphors.length)]
           context.fillText(glyph, index * cell + cell / 2, drops[index])
           drops[index] += cell
           if (drops[index] > height + Math.random() * 240) drops[index] = -Math.random() * 180
