@@ -19,7 +19,7 @@ const serif = Cormorant_Garamond({
 export const metadata: Metadata = {
   title: "Chinmay Dwivedi | Systems-minded Software Engineer",
   description:
-    "Chinmay Dwivedi builds developer tools, RL evaluation environments, and reliable distributed systems. Open-source contributor to Warp, Prime Intellect, and Monkeytype.",
+    "Chinmay Dwivedi builds developer tools, AI retrieval systems, and reliable distributed systems. Open-source contributor to Warp and Monkeytype.",
   keywords: [
     "Chinmay Dwivedi",
     "Software Developer",

@@ -47,12 +47,12 @@ const snapshot: ProfileResult = {
     country: "India",
     city: "Bengaluru",
     organization: "PES University",
-    rating: 1054,
+    rating: 1120,
     rank: "newbie",
-    maxRating: 1106,
+    maxRating: 1120,
     maxRank: "newbie",
   },
-  solvedSnapshot: 305,
+  solvedSnapshot: 354,
   ratingChanges: [
     { contestId: 2091, contestName: "Codeforces Round 1013 (Div. 3)", handle: HANDLE, rank: 18820, ratingUpdateTimeSeconds: 1742921400, oldRating: 0, newRating: 388 },
     { contestId: 2113, contestName: "Codeforces Round 1031 (Div. 2)", handle: HANDLE, rank: 7277, ratingUpdateTimeSeconds: 1749985500, oldRating: 388, newRating: 670 },
@@ -71,7 +71,8 @@ const snapshot: ProfileResult = {
     { contestId: 2185, contestName: "Codeforces Round 1074 (Div. 4)", handle: HANDLE, rank: 4783, ratingUpdateTimeSeconds: 1768755000, oldRating: 1027, newRating: 1106 },
     { contestId: 2193, contestName: "Codeforces Round 1076 (Div. 3)", handle: HANDLE, rank: 16720, ratingUpdateTimeSeconds: 1769359800, oldRating: 1106, newRating: 1058 },
     { contestId: 2218, contestName: "Codeforces Round 1090 (Div. 4)", handle: HANDLE, rank: 5632, ratingUpdateTimeSeconds: 1775321400, oldRating: 1058, newRating: 1099 },
-    { contestId: 2244, contestName: "Codeforces Round 1109 (Div. 3)", handle: HANDLE, rank: 12934, ratingUpdateTimeSeconds: 1784047800, oldRating: 1099, newRating: 1054 },
+    { contestId: 2244, contestName: "Codeforces Round 1109 (Div. 3)", handle: HANDLE, rank: 12416, ratingUpdateTimeSeconds: 1784047800, oldRating: 1099, newRating: 1056 },
+    { contestId: 2254, contestName: "Codeforces Round 1114 (Div. 3)", handle: HANDLE, rank: 5638, ratingUpdateTimeSeconds: 1785862200, oldRating: 1056, newRating: 1120 },
   ],
 }
 

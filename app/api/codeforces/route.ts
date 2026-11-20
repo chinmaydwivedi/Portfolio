@@ -3,6 +3,20 @@ import { NextRequest, NextResponse } from "next/server"
 const CODEFORCES_API = "https://codeforces.com/api"
 const CACHE_SECONDS = 60 * 60
 const PROFILE_REQUEST_GAP_MS = 2_100
+// Used only if the live submission count cannot be fetched (unique accepted problems on 20 Nov 2026).
+const SOLVED_FALLBACK = 354
+
+type Submission = { verdict?: string; problem?: { contestId?: number; index?: string } }
+
+// Counts distinct accepted problems, keyed by contest and problem index.
+function countSolved(submissions: Submission[]) {
+  const solved = new Set<string>()
+  for (const submission of submissions) {
+    if (submission.verdict !== "OK" || !submission.problem) continue
+    solved.add(`${submission.problem.contestId ?? "gym"}-${submission.problem.index ?? ""}`)
+  }
+  return solved.size
+}
 const ALLOWED_ENDPOINTS = new Set([
   "profile",
   "user.info",
@@ -87,13 +101,23 @@ export async function GET(request: NextRequest) {
         handle,
       })
 
+      let solvedSnapshot = SOLVED_FALLBACK
+      try {
+        await pause(PROFILE_REQUEST_GAP_MS)
+        const submissions = await fetchCodeforces<Submission[]>("user.status", { handle })
+        const liveCount = countSolved(submissions)
+        if (liveCount > 0) solvedSnapshot = liveCount
+      } catch {
+        // Keep the fallback; the rating data above is still live.
+      }
+
       return NextResponse.json(
         {
           status: "OK",
           result: {
             user: users[0] ?? null,
             ratingChanges,
-            solvedSnapshot: 305,
+            solvedSnapshot,
           },
         },
         { headers: responseHeaders },

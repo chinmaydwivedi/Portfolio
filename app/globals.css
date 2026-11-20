@@ -466,6 +466,7 @@ section[id], footer[id] { scroll-margin-top: 24px; }
 .filter-row .selected { background: var(--mint); color: var(--paper-ink); }
 .filter-row i { display: flex; align-items: center; margin-left: auto; padding: 0 4px; color: var(--mint); font-style: normal; }
 .runs-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px; }
+.runs-grid > .run-card:last-child:nth-child(odd) { grid-column: 1 / -1; }
 .run-card {
   min-width: 0;
   display: flex;

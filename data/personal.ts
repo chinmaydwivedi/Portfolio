@@ -1,11 +1,11 @@
 export const personal = {
   name: "Chinmay Dwivedi",
   title: "Systems-minded Software Engineer",
-  tagline: "Building developer tools, RL evaluation environments, and reliable distributed systems.",
+  tagline: "Building developer tools, AI retrieval systems, and reliable distributed systems.",
   about: [
-    "I'm a CS undergraduate at PES University, Bangalore, passionate about building innovative software solutions. My interests span systems programming, cryptography, computer vision, and competitive programming.",
-    "Currently contributing to open-source at Prime Intellect and shipping production fixes to projects including Warp and Monkeytype. I also mentor developers at Google Developer Group, helping them grow their skills.",
-    "With 500+ verified problems solved across competitive programming platforms, I bring analytical rigor and practical engineering judgment to every project I build.",
+    "I'm a final-year Computer Science student at PES University, Bengaluru (B.Tech, graduating 2027). My interests span distributed systems, data infrastructure, AI retrieval, and competitive programming.",
+    "I've had fixes merged into Warp and Monkeytype, I build and run CPBoard for 147 students across 4 universities, and my capstone, NeSy-GraphRAG, is an AI research assistant with a paper in preparation. I also mentored 50+ students at Google Developer Groups on Campus.",
+    "With 620+ problems solved across 35 rated contests on Codeforces, AtCoder and LeetCode, I bring analytical rigor and practical engineering judgment to every project I build.",
   ],
   email: "chinmaydhardwivedi@gmail.com",
   contactEmail: "chinmaydwivedi.official@gmail.com",
@@ -17,8 +17,8 @@ export const personal = {
   university: "PES University",
   resumeUrl: "/chinmay-dwivedi-resume.pdf",
   highlights: [
-    { label: "Problems Solved", value: "500+" },
-    { label: "Open Source", value: "Prime Intellect" },
+    { label: "Problems Solved", value: "620+" },
+    { label: "Open Source", value: "Warp · Monkeytype" },
     { label: "Hackathon", value: "Top 10 Terrathon" },
     { label: "Role", value: "GDG Mentor" },
   ],

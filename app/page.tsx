@@ -17,19 +17,11 @@ import { projects } from "@/data/projects"
 
 const contributions = [
   {
-    repo: "PrimeIntellect-ai/community-environments",
-    pr: "#356",
-    state: "OPEN",
-    title: "VirtualBox codebase-search environment",
-    detail: "630 search prompts, an environment loader, evaluator, model rollouts, and documentation across eight files.",
-    href: "https://github.com/PrimeIntellect-ai/community-environments/pull/356",
-  },
-  {
     repo: "warpdotdev/warp",
     pr: "#12328",
     state: "MERGED",
     title: "Cancellable repository metadata walks",
-    detail: "Abortable async traversal, stale-generation guards, duplicate-load coalescing, and 127 passing package tests.",
+    detail: "Abortable async traversal, stale-generation guards, duplicate-load coalescing, and ten new lifecycle, cancellation and stale-result tests.",
     href: "https://github.com/warpdotdev/warp/pull/12328",
   },
   {
@@ -40,12 +32,22 @@ const contributions = [
     detail: "Replaced full leaderboard fetches with MongoDB counts, made personal-best updates atomic, and removed sensitive logs.",
     href: "https://github.com/monkeytypegame/monkeytype/pull/7837",
   },
+  {
+    repo: "google/googletest",
+    pr: "#5109",
+    state: "OPEN",
+    title: "Reject void results for ReturnNew and ReturnPointee",
+    detail: "Compile-time checks so mock actions that would return void fail at build time instead of misbehaving at runtime.",
+    href: "https://github.com/google/googletest/pull/5109",
+  },
 ]
 
 const recentActivity = [
-  { date: "JUL 19", repo: "cpboard", hash: "650c5eb", message: "Classify missing provider profiles safely", href: "https://github.com/chinmaydwivedi/cpboard/commit/650c5eb4" },
-  { date: "JUL 19", repo: "cpboard", hash: "3b3e5f5", message: "Fix CodeQL URL parsing and log findings", href: "https://github.com/chinmaydwivedi/cpboard/commit/3b3e5f55" },
-  { date: "JUL 19", repo: "cpboard", hash: "adc96b7", message: "Harden platform refresh and production security", href: "https://github.com/chinmaydwivedi/cpboard/commit/adc96b7f" },
+  { date: "OCT 29", repo: "cpboard", hash: "ce8a60d", message: "Patch critical Next.js advisories after the nightly audit gate", href: "https://github.com/chinmaydwivedi/cpboard/commit/ce8a60d" },
+  { date: "SEP 29", repo: "google/googletest", hash: "PR #5109", message: "Reject void results for ReturnNew and ReturnPointee", href: "https://github.com/google/googletest/pull/5109" },
+  { date: "SEP 29", repo: "cpboard", hash: "a3fe720", message: "Add ICPC guide, merge profile into dashboard, refresh branding", href: "https://github.com/chinmaydwivedi/cpboard/commit/a3fe720" },
+  { date: "SEP 13", repo: "nesy-graphrag", hash: "185659d", message: "Constrain local relevance grading (500 to 64 tokens per batch)", href: "https://github.com/cvishnu007/nesy-graphrag/commit/185659d85f5ab3a875fbdcfddf1256f4b62bf2a5" },
+  { date: "SEP 13", repo: "nesy-graphrag", hash: "579de55", message: "Add local Ollama generation and reproducible evaluation workflows", href: "https://github.com/cvishnu007/nesy-graphrag/commit/579de55" },
   { date: "JUL 17", repo: "warpdotdev/warp", hash: "PR #12328", message: "Repository metadata cancellation fix merged", href: "https://github.com/warpdotdev/warp/pull/12328" },
   { date: "JUN 19", repo: "snippex", hash: "d74a9b2", message: "Ship and polish template archive exports", href: "https://github.com/chinmaydwivedi/snippex/commit/d74a9b25" },
   { date: "JUN 17", repo: "skipthat", hash: "480f087", message: "Build privacy-first YouTube filtering extension", href: "https://github.com/chinmaydwivedi/skipthat/commit/480f087c" },
@@ -57,13 +59,15 @@ const runMeta: Record<string, { status: string; signal: string; result: string; 
   kubedataguard: { status: "VERIFIED", signal: "5 data stores", result: "closed loop", segments: 7 },
   skipthat: { status: "SHIPPED", signal: "local-only", result: "zero tracking", segments: 8 },
   snippex: { status: "LIVE", signal: "3 export formats", result: "browser ready", segments: 8 },
+  nesy: { status: "CAPSTONE", signal: "47.6K papers", result: "traceable claims", segments: 7 },
 }
 
 const capabilities = [
-  ["LANGUAGES", "C++ · Python · TypeScript · Go · SQL"],
+  ["LANGUAGES", "C++ · Python · TypeScript · Go · Rust · SQL"],
   ["SYSTEMS", "Kubernetes · Docker · Linux · Kafka"],
   ["DATA", "PostgreSQL · OpenSearch · Redis · ClickHouse"],
   ["WEB", "Next.js · React · FastAPI · Prisma"],
+  ["AI", "RAG · LLM APIs (Groq, Ollama) · ChromaDB · Neo4j"],
 ]
 
 function ExternalArrow() {
@@ -100,7 +104,7 @@ export default function Portfolio() {
           <h1 id="hero-title">Systems that<br />stay correct<br /><em>under pressure.</em></h1>
           <p className="hero-intro">
             I&apos;m Chinmay Dwivedi—a systems-minded software engineer building developer tools,
-            RL evaluation environments, and reliable distributed systems.
+            AI retrieval systems, and reliable distributed systems.
           </p>
           <div className="hero-actions">
             <a className="primary-action" href="#work">RUN: LS ./WORK <ArrowDownRight /></a>
@@ -125,10 +129,10 @@ export default function Portfolio() {
             <div className="monitor-reticle" aria-hidden="true"><span /><span /></div>
           </div>
           <figcaption>
-            <div><span>problems_solved</span><strong>500+</strong></div>
+            <div><span>problems_solved</span><strong>620+</strong></div>
+            <div><span>cpboard_students</span><strong>147</strong></div>
             <div><span>students_mentored</span><strong>50+</strong></div>
-            <div><span>public_repos</span><strong>14</strong></div>
-            <div><span>rl_eval_prompts</span><strong>630</strong></div>
+            <div><span>merged_upstream_prs</span><strong>2</strong></div>
           </figcaption>
         </figure>
       </section>
@@ -136,9 +140,9 @@ export default function Portfolio() {
       <div className="signal-tape" aria-label="Areas of focus">
         <div>
           <span>OPEN SOURCE</span><i>✣</i><span>DISTRIBUTED SYSTEMS</span><i>✣</i>
-          <span>AGENT ENVIRONMENTS</span><i>✣</i><span>DEVELOPER TOOLS</span><i>✣</i>
+          <span>AI RETRIEVAL</span><i>✣</i><span>DEVELOPER TOOLS</span><i>✣</i>
           <span>OPEN SOURCE</span><i>✣</i><span>DISTRIBUTED SYSTEMS</span><i>✣</i>
-          <span>AGENT ENVIRONMENTS</span><i>✣</i><span>DEVELOPER TOOLS</span><i>✣</i>
+          <span>AI RETRIEVAL</span><i>✣</i><span>DEVELOPER TOOLS</span><i>✣</i>
         </div>
       </div>
 
@@ -146,19 +150,19 @@ export default function Portfolio() {
         <fieldset className="story-panel offset-panel">
           <legend>whoami</legend>
           <p className="panel-index">01 / ABOUT</p>
-          <h2>Engineering where systems, agents, and people meet.</h2>
+          <h2>Engineering where systems, data, and people meet.</h2>
           <p>
-            I&apos;m a Computer Science undergraduate at PES University, graduating in 2027. My best work
-            lives between infrastructure, agent evaluation, and developer experience: places where
+            I&apos;m a final-year Computer Science student at PES University, graduating in 2027. My best work
+            lives between infrastructure, AI retrieval, and developer experience: places where
             correctness has to survive contact with real users and messy systems.
           </p>
           <p>
-            I contribute upstream at Prime Intellect and have shipped production fixes to Warp and
-            Monkeytype. As a GDG campus mentor, I&apos;ve also helped 50+ students turn ideas into working software.
+            I&apos;ve had fixes merged into Warp and Monkeytype, and my capstone, NeSy-GraphRAG, is an AI
+            research assistant with a paper in preparation. As a GDG campus mentor, I&apos;ve also helped 50+ students turn ideas into working software.
           </p>
           <div className="operator-meta">
             <span><MapPin /> BENGALURU, IN</span>
-            <span><span className="pulse-dot" /> AVAILABLE FOR INTERESTING WORK</span>
+            <span><span className="pulse-dot" /> OPEN TO 6-MONTH INTERNSHIPS FROM DEC 2026</span>
           </div>
         </fieldset>
 
@@ -192,10 +196,10 @@ export default function Portfolio() {
       <section className="content-section" id="work" aria-labelledby="work-title">
         <div className="section-heading">
           <div><p className="eyebrow">03 / $ LS ./SELECTED-WORK</p><h2 id="work-title">Active engineering runs</h2></div>
-          <p>Four systems selected for their technical depth, shipped state, and real-world feedback loops.</p>
+          <p>Five systems selected for their technical depth, shipped state, and real-world feedback loops.</p>
         </div>
         <div className="filter-row" aria-label="Static project filters">
-          <span className="selected">ALL 04</span><span>DEPLOYED 02</span><span>TOOLS 02</span>
+          <span className="selected">ALL 05</span><span>DEPLOYED 02</span><span>TOOLS 02</span><span>AI 01</span>
           <i>ORDER: RECENTLY UPDATED</i>
         </div>
 
@@ -236,7 +240,7 @@ export default function Portfolio() {
         <div className="oss-intro">
           <p className="eyebrow">04 / $ GH PR LIST --RECENT</p>
           <h2 id="oss-title">Open-source work,<br /><em>in public.</em></h2>
-          <p>Production fixes, agent environments, performance work, and auditable contracts sent upstream.</p>
+          <p>Production fixes, performance work, and compile-time safety checks sent upstream.</p>
           <a href={`${personal.github}?tab=pull-requests`} target="_blank" rel="noreferrer">VIEW GITHUB PROFILE <ExternalArrow /></a>
         </div>
         <div className="contribution-table">

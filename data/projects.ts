@@ -16,7 +16,7 @@ export const projects: Project[] = [
     id: "cpboard",
     title: "CPBoard",
     description:
-      "A verified multi-university CP platform with four provider lanes, ownership challenges, unified rankings, contest alerts, practice recommendations, and a hardened scheduled-sync pipeline.",
+      "A verified multi-university CP platform used by 147 students across 4 universities, with four provider lanes, ownership challenges, unified rankings, contest alerts, practice recommendations, and a hardened scheduled-sync pipeline.",
     longDescription:
       "A full-stack competitive programming leaderboard platform built for universities. Features multi-platform tracking, university leaderboards, activity heatmaps, and CP rankings. Built with Next.js, TypeScript, and modern web technologies.",
     image: "/cpboard.png",
@@ -36,6 +36,17 @@ export const projects: Project[] = [
     repoUrl: "https://github.com/chinmaydwivedi/KubeDataGuard",
     featured: true,
     category: "systems",
+  },
+  {
+    id: "nesy",
+    title: "NeSy-GraphRAG",
+    description: "My team capstone: an AI research assistant over ~47,600 papers that pairs vector search with a Neo4j citation graph so every claim traces to an abstract. I built the LLM client and an evaluation pipeline for 1,145 query-paper pairs.",
+    image: "/placeholder.svg",
+    technologies: ["Python", "ChromaDB", "Neo4j", "Ollama"],
+    liveUrl: "#",
+    repoUrl: "https://github.com/cvishnu007/nesy-graphrag/tree/feat/local-evaluation",
+    featured: true,
+    category: "ml",
   },
   {
     id: "skipthat",
